@@ -4,7 +4,21 @@
   "plugins": ["@nrwl/nx"],
   "overrides": [
     {
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@nrwl/nx/typescript"],
+      "rules": {}
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nrwl/nx/javascript"],
+      "rules": {}
+    },
+    {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "extends": ["@psweeney101/eslint-config"],
+      "parserOptions": {
+        "project": ["tsconfig.base.json"]
+      },
       "rules": {
         "@nrwl/nx/enforce-module-boundaries": [
           "error",
@@ -20,16 +34,6 @@
           }
         ]
       }
-    },
-    {
-      "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nrwl/nx/typescript"],
-      "rules": {}
-    },
-    {
-      "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nrwl/nx/javascript"],
-      "rules": {}
     }
   ]
 }

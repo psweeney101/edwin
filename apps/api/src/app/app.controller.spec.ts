@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -14,9 +13,9 @@ describe('AppController', () => {
   });
 
   describe('getData', () => {
-    it('should return "Welcome to api!"', () => {
+    it('should return "Welcome to Edwin!"', () => {
       const appController = app.get<AppController>(AppController);
-      expect(appController.getData()).toEqual({ message: 'Welcome to api!' });
+      expect(appController.getData()).toEqual({ message: 'Welcome to Edwin!' });
     });
   });
 });
