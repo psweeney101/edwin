@@ -1,7 +1,7 @@
 <div align="center">
   <h1 style="margin: 0">Edwin</h1>
 
-  <img height="100px" src="libs/assets/logo.png" />
+  <img height="100px" src="assets/logo.png" />
 
   <br />
   <strong>A smart display with some nifty plugins.</strong>
