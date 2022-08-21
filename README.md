@@ -66,6 +66,12 @@ npm run build
 npm run deploy
 ```
 
+## Contributing
+```bash
+# 👨‍💻 Generate a new Edwin Plugin
+nx workspace-generator plugin <plugin> [--skip-ui] [--skip-api] [--skip-shared]
+```
+
 ## License
 
 [MIT](LICENSE)
