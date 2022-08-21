@@ -61,6 +61,11 @@ npm run test:watch
 npm run build
 ```
 
+```bash
+# 🚀 Deploy Edwin
+npm run deploy
+```
+
 ## License
 
 [MIT](LICENSE)
