@@ -5,21 +5,22 @@ import * as nrwl from '@nrwl/workspace';
 
 export type Schema = {
   name: string;
-  'skip-ui'?: boolean;
-  'skip-api'?: boolean;
-  'skip-shared'?: boolean;
+  ui?: boolean;
+  api?: boolean;
+  shared?: boolean;
 }
 
 export default async function (tree: Tree, schema: Schema) {
-  const { name } = schema;
+  const { name, ui, api, shared } = schema;
   const Name = name.charAt(0).toUpperCase() + name.slice(1);
 
   // Create Angular Library
-  if (!schema['skip-ui']) {
+  if (ui) {
     await angular.libraryGenerator(tree, {
       directory: name,
       name: 'ui',
       simpleModuleName: true,
+      strict: true,
     });
 
     // Rename the Angular Module from ui.module.ts to plugin.module.ts
@@ -46,10 +47,11 @@ export default async function (tree: Tree, schema: Schema) {
   }
 
   // Create the Nest Library
-  if (!schema['skip-api']) {
+  if (api) {
     await nest.libraryGenerator(tree, {
       directory: name,
       name: 'api',
+      strict: true,
     });
 
     // Rename the Nest Module from plugin-api.module.ts to plugin.module.ts
@@ -69,13 +71,14 @@ export default async function (tree: Tree, schema: Schema) {
   }
 
   // Create the Shared Library
-  if (!schema['skip-shared']) {
+  if (shared) {
     await nrwl.libraryGenerator(tree, {
       directory: name,
       name: 'shared',
       simpleModuleName: true,
       skipBabelrc: true,
       unitTestRunner: 'none',
+      strict: true,
     });
 
     // Rename the Shared Module from shared.ts to plugin.ts
@@ -94,14 +97,14 @@ export default async function (tree: Tree, schema: Schema) {
   }
 
   // Create 1 README.md for entire plugin
-  tree.write(`libs/${schema.name}/README.md`, `# 😎 ${Name} Plugin
+  tree.write(`libs/${name}/README.md`, `# 😎 ${Name} Plugin
 This library was generated with [Nx](https://nx.dev) using [Edwin's plugin generator](../../tools/generators/plugin/schema.json).
 
 ## About
 This is a nifty plugin for Edwin!
 
 ## Libraries
-${schema['skip-api'] ? '' : `* ${name}-api\n`}${schema['skip-shared'] ? '' : `* ${name}-shared\n`}${schema['skip-ui'] ? '' : `* ${name}-ui\n`}`);
+${api ? `* ${name}-api\n` : ''}${shared ? `* ${name}-shared\n` : ''}${ui ? `* ${name}-ui\n` : ''}`);
 
   await formatFiles(tree);
 

@@ -16,19 +16,19 @@
       "x-prompt": "What name would you like to use for the plugin?",
       "pattern": "^[a-zA-Z].*$"
     },
-    "skip-ui": {
+    "ui": {
       "type": "boolean",
-      "description": "Whether to skip creating an Angular UI library or not",
+      "description": "Whether to create an Angular UI library or not",
       "default": false
     },
-    "skip-api": {
+    "api": {
       "type": "boolean",
-      "description": "Whether to skip creating an Nest API library or not",
+      "description": "Whether to create an Nest API library or not",
       "default": false
     },
-    "skip-shared": {
+    "shared": {
       "type": "boolean",
-      "description": "Whether to skip creating a shared library or not",
+      "description": "Whether to create a shared library or not",
       "default": false
     }
   },

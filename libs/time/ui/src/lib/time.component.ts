@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./time.component.css'],
 })
 export class TimeComponent implements OnInit {
+  /** The current timestamp, which is updated every second */
   now = Date.now();
 
   ngOnInit(): void {

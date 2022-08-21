@@ -73,8 +73,7 @@
       },
       "defaultConfiguration": "development",
       "options": {
-        "proxyConfig": "apps/ui/proxy.conf.json",
-        "host": "0.0.0.0"
+        "proxyConfig": "apps/ui/proxy.conf.json"
       }
     },
     "extract-i18n": {

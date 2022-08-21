@@ -18,9 +18,6 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@edwin/api-interfaces": [
-        "libs/api-interfaces/src/index.ts"
-      ],
       "@edwin/time/ui": [
         "libs/time/ui/src/index.ts"
       ]
