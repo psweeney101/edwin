@@ -4,7 +4,8 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "build": "nx build",
+    "build": "nx run-many --target build --configuration production",
+    "deploy": "bash ./devops/deploy.sh",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main",
     "lint": "nx run-many --target lint; nx workspace-lint; sort-package-json --check",
     "lint:fix": "nx run-many --target lint --fix; nx workspace-lint; sort-package-json",

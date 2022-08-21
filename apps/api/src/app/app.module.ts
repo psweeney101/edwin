@@ -7,7 +7,7 @@ import { environment } from '../environments/environment';
 
 @Module({
   imports: [
-    ServeStaticModule.forRoot({ rootPath: join(environment.uiPath) }),
+    ServeStaticModule.forRoot({ rootPath: join(environment.uiPath), serveRoot: '/' }),
   ],
   controllers: [AppController],
   providers: [AppService],

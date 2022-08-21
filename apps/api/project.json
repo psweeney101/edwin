@@ -13,13 +13,9 @@
         "main": "apps/api/src/main.ts",
         "tsConfig": "apps/api/tsconfig.app.json",
         "assets": [
-          "apps/api/src/assets",
-          {
-            "input": "assets",
-            "glob": "**.*",
-            "output": "assets"
-          }
-        ]
+          "apps/api/src/assets"
+        ],
+        "generatePackageJson": true
       },
       "configurations": {
         "production": {
