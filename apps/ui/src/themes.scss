@@ -1,0 +1,55 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+@include mat.core;
+
+// Function that sets the theme
+@mixin set-variables($theme) {
+  // Grab the variables from the theme
+  $primary-palette: map.get($theme, "primary");
+  $accent-palette: map.get($theme, "accent");
+  $warn-palette: map.get($theme, "warn");
+  $foreground: map.get($theme, "foreground");
+  $background: map.get($theme, "background");
+
+  // Set the variables
+  --primary: #{mat.get-color-from-palette($primary-palette)};
+  --accent: #{mat.get-color-from-palette($accent-palette)};
+  --warn: #{mat.get-color-from-palette($warn-palette)};
+  --foreground: #{map.get($foreground, "base")};
+  --background: #{map.get($background, "background")};
+}
+
+// Dark Theme
+$dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: mat.define-palette(mat.$blue-palette),
+      accent: mat.define-palette(mat.$gray-palette),
+      warn: mat.define-palette(mat.$red-palette),
+    ),
+  )
+);
+
+// Override Material's Dark Theme color to black
+$dark-theme: map.merge($dark-theme, (background: map.merge(map.get($dark-theme, background), (background: black))));
+
+body {
+  @include mat.all-component-themes($dark-theme);
+  @include set-variables($dark-theme);
+}
+
+// Light Theme
+$light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: mat.define-palette(mat.$blue-palette),
+      accent: mat.define-palette(mat.$gray-palette),
+      warn: mat.define-palette(mat.$red-palette),
+    ),
+  )
+);
+
+body[theme="light"] {
+  @include mat.all-component-colors($light-theme);
+  @include set-variables($light-theme);
+}

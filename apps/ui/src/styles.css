@@ -1,1 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+@import "@fontsource/roboto";
+@import "material-icons/iconfont/material-icons.css";
+@import "~@fortawesome/fontawesome-free/css/all.css";
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.spacer { flex: 1; }
+
+.gray { opacity: 0.5; }

@@ -1,0 +1,11 @@
+<div class="date-wrapper"></div>
+
+<div class="time-wrapper">
+  {{ now | date: 'h' }}
+  <div class="colon">:</div>
+  {{ now | date: 'mm a' }}
+</div>
+
+<div class="date-wrapper gray">
+  {{ now | date: 'EEE, MMM d' }}
+</div>

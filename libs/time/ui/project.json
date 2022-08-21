@@ -1,0 +1,27 @@
+{
+  "projectType": "library",
+  "sourceRoot": "libs/time/ui/src",
+  "prefix": "edwin",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "coverage/libs/time/ui"
+      ],
+      "options": {
+        "jestConfig": "libs/time/ui/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/time/ui/**/*.ts",
+          "libs/time/ui/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
