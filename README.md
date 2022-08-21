@@ -12,9 +12,6 @@
   <a href="https://angular.io">
     <img src="https://img.shields.io/badge/angular-%23DD0031.svg?style=for-the-badge&logo=angular&logoColor=white" />
   </a>
-  <a href="https://www.electronjs.org">
-    <img src="https://img.shields.io/badge/Electron-191970?style=for-the-badge&logo=Electron&logoColor=white" />
-  </a>
   <a href="https://nestjs.com">
     <img src="https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white" />
   </a>

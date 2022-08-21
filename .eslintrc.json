@@ -40,8 +40,8 @@
               "builtin",
               "external",
               "internal",
-              "parent",
               "sibling",
+              "parent",
               "index",
               "object",
               "type"
