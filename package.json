@@ -59,7 +59,7 @@
     "@nrwl/nx-cloud": "latest",
     "@nrwl/workspace": "14.5.8",
     "@psweeney101/eslint-config": "github:psweeney101/eslint-config#1.0.1",
-    "@psweeney101/stylelint-config": "github:psweeney101/stylelint-config",
+    "@psweeney101/stylelint-config": "github:psweeney101/stylelint-config#1.0.0",
     "@types/jest": "27.4.1",
     "@types/node": "16.11.7",
     "@typescript-eslint/eslint-plugin": "^5.29.0",
