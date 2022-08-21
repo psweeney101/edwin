@@ -12,7 +12,11 @@
         "main": "apps/ui/src/main.ts",
         "polyfills": "apps/ui/src/polyfills.ts",
         "tsConfig": "apps/ui/tsconfig.app.json",
-        "assets": ["apps/ui/src/favicon.ico", "apps/ui/src/assets"],
+        "assets": ["apps/ui/src/assets", {
+          "input": "libs/assets",
+          "glob": "**.*",
+          "output": "assets"
+        }],
         "styles": ["apps/ui/src/styles.css"],
         "scripts": []
       },
