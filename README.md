@@ -29,12 +29,19 @@
 ## Installation
 
 ```bash
-# Clone the repository from GitHub
+# 🐑 Clone the repository from GitHub
 git clone https://github.com/psweeney101/edwin
 
-# Install dependencies
+# 🏗 Install dependencies
 cd edwin
 npm install
+```
+
+## Setup
+```bash
+# 📝 Both at .env and devops/.prod.env
+UI_PATH=/path/to/edwin/dist/apps/ui
+PHOTOS_PATH=/path/to/Photos
 ```
 
 ## Usage

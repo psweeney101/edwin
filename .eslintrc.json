@@ -33,6 +33,12 @@
             ]
           }
         ],
+        "@typescript-eslint/dot-notation": [
+          "error",
+          {
+            "allowIndexSignaturePropertyAccess": true
+          }
+        ],
         "import/order": [
           "error",
           {
@@ -40,8 +46,8 @@
               "builtin",
               "external",
               "internal",
-              "sibling",
               "parent",
+              "sibling",
               "index",
               "object",
               "type"

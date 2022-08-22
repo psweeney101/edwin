@@ -15,7 +15,6 @@
         "polyfills": "apps/ui/src/polyfills.ts",
         "tsConfig": "apps/ui/tsconfig.app.json",
         "assets": [
-          "apps/ui/src/assets",
           {
             "input": "assets",
             "glob": "**.*",
@@ -44,8 +43,8 @@
           ],
           "fileReplacements": [
             {
-              "replace": "apps/ui/src/environments/environment.ts",
-              "with": "apps/ui/src/environments/environment.prod.ts"
+              "replace": "libs/environments/ui/src/lib/environment.ts",
+              "with": "libs/environments/ui/src/lib/environment.prod.ts"
             }
           ],
           "outputHashing": "all"

@@ -52,6 +52,8 @@ export default async function (tree: Tree, schema: Schema) {
       directory: name,
       name: 'api',
       strict: true,
+      controller: true,
+      service: true,
     });
 
     // Rename the Nest Module from plugin-api.module.ts to plugin.module.ts
@@ -65,6 +67,20 @@ export default async function (tree: Tree, schema: Schema) {
       tree.write(newModuleName, module.replace(`${Name}ApiModule`, `${Name}Module`) || '');
     }
     tree.write(`libs/${name}/api/src/index.ts`, `export * from './lib/${name}.module';\n`);
+
+    // Create the root Nest Controller & Service
+    await nest.controllerGenerator(tree, {
+      name,
+      project: `${name}-api`,
+      directory: 'lib',
+      flat: true,
+    });
+    await nest.serviceGenerator(tree, {
+      name,
+      project: `${name}-api`,
+      directory: 'lib',
+      flat: true,
+    });
 
     // Delete README
     tree.delete(`libs/${name}/api/README.md`);
@@ -89,7 +105,7 @@ export default async function (tree: Tree, schema: Schema) {
     // Update the plugin.ts file
     tree.write(newModuleName, `export type ${Name} = {
   name: string;
-}\n`);
+};\n`);
     tree.write(`libs/${name}/shared/src/index.ts`, `export * from './lib/${name}';\n`);
 
     // Delete README

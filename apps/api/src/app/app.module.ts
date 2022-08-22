@@ -1,13 +1,14 @@
-import { join } from 'path';
 import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { environment } from '@edwin/environments/api';
+import { PhotosModule } from '@edwin/photos/api';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { environment } from '../environments/environment';
 
 @Module({
   imports: [
-    ServeStaticModule.forRoot({ rootPath: join(environment.uiPath), serveRoot: '/' }),
+    ServeStaticModule.forRoot({ rootPath: environment.uiPath, serveRoot: '/' }),
+    PhotosModule,
   ],
   controllers: [AppController],
   providers: [AppService],

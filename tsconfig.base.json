@@ -18,6 +18,21 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@edwin/environments/api": [
+        "libs/environments/api/src/index.ts"
+      ],
+      "@edwin/environments/ui": [
+        "libs/environments/ui/src/index.ts"
+      ],
+      "@edwin/photos/api": [
+        "libs/photos/api/src/index.ts"
+      ],
+      "@edwin/photos/shared": [
+        "libs/photos/shared/src/index.ts"
+      ],
+      "@edwin/photos/ui": [
+        "libs/photos/ui/src/index.ts"
+      ],
       "@edwin/time/ui": [
         "libs/time/ui/src/index.ts"
       ]

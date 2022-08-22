@@ -10,8 +10,6 @@ export class TimeComponent implements OnInit {
   now = Date.now();
 
   ngOnInit(): void {
-    setInterval(() => {
-      this.now = Date.now();
-    }, 1000);
+    setInterval(() => { this.now = Date.now(); }, 1000);
   }
 }

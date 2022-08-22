@@ -1,0 +1,15 @@
+<!-- Prefetch images -->
+<ng-container *ngIf="next">
+  <link rel="prefetch" [href]="src(next)" as="image">
+</ng-container>
+
+<!-- Display 1 image at a time -->
+<ng-container *ngFor="let photo of photos">
+  <img *ngIf="photos[index] === photo" [src]="src(photo)" @fade>
+</ng-container>
+
+<!-- Time and date -->
+<div class="info">
+  <div class="time">{{ now | date: 'shortTime' }}</div>
+  <div class="date gray">{{ now | date: 'EEE, MMM d' }}</div>
+</div>

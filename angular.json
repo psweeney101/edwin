@@ -3,6 +3,93 @@
   "version": 2,
   "projects": {
     "api": "apps/api",
+    "environments-api": {
+      "root": "libs/environments/api",
+      "sourceRoot": "libs/environments/api/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": [
+            "{options.outputFile}"
+          ],
+          "options": {
+            "lintFilePatterns": [
+              "libs/environments/api/**/*.ts"
+            ]
+          }
+        }
+      },
+      "tags": []
+    },
+    "environments-ui": {
+      "root": "libs/environments/ui",
+      "sourceRoot": "libs/environments/ui/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": [
+            "{options.outputFile}"
+          ],
+          "options": {
+            "lintFilePatterns": [
+              "libs/environments/ui/**/*.ts"
+            ]
+          }
+        }
+      },
+      "tags": []
+    },
+    "photos-api": {
+      "root": "libs/photos/api",
+      "sourceRoot": "libs/photos/api/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": [
+            "{options.outputFile}"
+          ],
+          "options": {
+            "lintFilePatterns": [
+              "libs/photos/api/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/photos/api"
+          ],
+          "options": {
+            "jestConfig": "libs/photos/api/jest.config.ts",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "photos-shared": {
+      "root": "libs/photos/shared",
+      "sourceRoot": "libs/photos/shared/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": [
+            "{options.outputFile}"
+          ],
+          "options": {
+            "lintFilePatterns": [
+              "libs/photos/shared/**/*.ts"
+            ]
+          }
+        }
+      },
+      "tags": []
+    },
+    "photos-ui": "libs/photos/ui",
     "time-ui": "libs/time/ui",
     "ui": "apps/ui",
     "ui-e2e": "apps/ui-e2e"

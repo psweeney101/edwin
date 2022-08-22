@@ -12,9 +12,9 @@ describe('AppService', () => {
     service = app.get<AppService>(AppService);
   });
 
-  describe('getData', () => {
-    it('should return "Welcome to Edwin!"', () => {
-      expect(service.getData()).toEqual('Welcome to Edwin!');
+  describe('ping', () => {
+    it('should return pong', () => {
+      expect(service.ping()).toEqual('pong');
     });
   });
 });

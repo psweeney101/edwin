@@ -1,0 +1,27 @@
+{
+  "projectType": "library",
+  "sourceRoot": "libs/photos/ui/src",
+  "prefix": "edwin",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "coverage/libs/photos/ui"
+      ],
+      "options": {
+        "jestConfig": "libs/photos/ui/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/photos/ui/**/*.ts",
+          "libs/photos/ui/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
