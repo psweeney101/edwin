@@ -6,6 +6,7 @@ npm run build
 
 echo "💌 Sending Edwin... 📭"
 rsync -av ./dist/apps/ ironman@happy:~/edwin/ --delete
+rsync -av ./devops/.prod.env ironman@happy:~/edwin/api/.env --delete
 
 echo "👔 Setting up Edwin... 👖"
 ssh ironman@happy "

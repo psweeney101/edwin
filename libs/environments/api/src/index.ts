@@ -1,5 +1,13 @@
+import { config } from 'dotenv';
+
+const { parsed } = config();
+
+if (!parsed) {
+  throw new Error('Failed to load environment variables');
+}
+
 export const environment = {
-  production: process.env['NODE_ENV'] === 'production',
-  uiPath: process.env['UI_PATH'] as string,
-  photosPath: process.env['PHOTOS_PATH'] as string,
+  production: parsed['NODE_ENV'] === 'production',
+  uiPath: parsed['UI_PATH'],
+  photosPath: parsed['PHOTOS_PATH'],
 };
