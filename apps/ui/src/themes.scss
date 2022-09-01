@@ -19,6 +19,16 @@
   --background: #{map.get($background, "background")};
 }
 
+// Set typography
+$typography: mat.define-typography-config(
+  $headline:  mat.define-typography-level(20vmin),
+  $title:  mat.define-typography-level(10vmin),
+  $subheading-2:  mat.define-typography-level(7vmin),
+  $subheading-1:  mat.define-typography-level(5vmin),
+);
+
+@include mat.core($typography);
+
 // Dark Theme
 $dark-theme: mat.define-dark-theme(
   (
@@ -26,7 +36,7 @@ $dark-theme: mat.define-dark-theme(
       primary: mat.define-palette(mat.$blue-palette),
       accent: mat.define-palette(mat.$gray-palette),
       warn: mat.define-palette(mat.$red-palette),
-    ),
+    )
   )
 );
 
@@ -45,7 +55,7 @@ $light-theme: mat.define-light-theme(
       primary: mat.define-palette(mat.$blue-palette),
       accent: mat.define-palette(mat.$gray-palette),
       warn: mat.define-palette(mat.$red-palette),
-    ),
+    )
   )
 );
 

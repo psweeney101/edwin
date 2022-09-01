@@ -39,6 +39,7 @@
             "allowIndexSignaturePropertyAccess": true
           }
         ],
+        "class-methods-use-this": "off",
         "import/order": [
           "error",
           {
