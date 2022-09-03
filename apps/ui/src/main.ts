@@ -3,7 +3,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { environment } from '@edwin/environments/ui';
 import { AppModule } from './app/app.module';
 
-if (environment.production) {
+if (environment.PRODUCTION) {
   enableProdMode();
 }
 

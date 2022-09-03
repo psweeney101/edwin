@@ -35,6 +35,15 @@
       ],
       "@edwin/time/ui": [
         "libs/time/ui/src/index.ts"
+      ],
+      "@edwin/wifi/api": [
+        "libs/wifi/api/src/index.ts"
+      ],
+      "@edwin/wifi/shared": [
+        "libs/wifi/shared/src/index.ts"
+      ],
+      "@edwin/wifi/ui": [
+        "libs/wifi/ui/src/index.ts"
       ]
     }
   },

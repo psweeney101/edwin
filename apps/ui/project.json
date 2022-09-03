@@ -25,7 +25,10 @@
           "apps/ui/src/themes.scss",
           "apps/ui/src/styles.css"
         ],
-        "scripts": []
+        "scripts": [],
+        "allowedCommonJsDependencies": [
+          "qr-code-styling"
+       ]
       },
       "configurations": {
         "production": {

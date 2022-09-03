@@ -6,7 +6,7 @@ import { PhotosService } from './photos.service';
 
 @Module({
   imports: [
-    ServeStaticModule.forRoot({ rootPath: environment.photosPath, serveRoot: '/api/photos' }),
+    ServeStaticModule.forRoot({ rootPath: environment.PHOTOS_PATH, serveRoot: '/api/photos' }),
   ],
   controllers: [PhotosController],
   providers: [PhotosService],

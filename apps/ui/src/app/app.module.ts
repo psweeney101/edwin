@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PhotosModule } from '@edwin/photos/ui';
 import { TimeModule } from '@edwin/time/ui';
+import { WifiModule } from '@edwin/wifi/ui';
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -15,6 +16,7 @@ import { AppComponent } from './app.component';
 
     TimeModule,
     PhotosModule,
+    WifiModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

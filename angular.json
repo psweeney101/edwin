@@ -92,6 +92,82 @@
     "photos-ui": "libs/photos/ui",
     "time-ui": "libs/time/ui",
     "ui": "apps/ui",
-    "ui-e2e": "apps/ui-e2e"
+    "ui-e2e": "apps/ui-e2e",
+    "wifi-api": {
+      "root": "libs/wifi/api",
+      "sourceRoot": "libs/wifi/api/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": [
+            "{options.outputFile}"
+          ],
+          "options": {
+            "lintFilePatterns": [
+              "libs/wifi/api/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/wifi/api"
+          ],
+          "options": {
+            "jestConfig": "libs/wifi/api/jest.config.ts",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "wifi-shared": {
+      "root": "libs/wifi/shared",
+      "sourceRoot": "libs/wifi/shared/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": [
+            "{options.outputFile}"
+          ],
+          "options": {
+            "lintFilePatterns": [
+              "libs/wifi/shared/**/*.ts"
+            ]
+          }
+        }
+      },
+      "tags": []
+    },
+    "wifi-ui": {
+      "projectType": "library",
+      "root": "libs/wifi/ui",
+      "sourceRoot": "libs/wifi/ui/src",
+      "prefix": "edwin",
+      "targets": {
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/wifi/ui"
+          ],
+          "options": {
+            "jestConfig": "libs/wifi/ui/jest.config.ts",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/wifi/ui/**/*.ts",
+              "libs/wifi/ui/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": []
+    }
   }
 }

@@ -5,7 +5,7 @@ import { Photos } from '@edwin/photos/shared';
 
 @Injectable()
 export class PhotosService {
-  path = environment.photosPath;
+  path = environment.PHOTOS_PATH;
 
   async list(): Promise<Photos> {
     const photos = await readdir(this.path);
