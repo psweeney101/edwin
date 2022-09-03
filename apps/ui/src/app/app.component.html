@@ -1,3 +1,8 @@
-<edwin-time *ngIf="shouldDisplayTime"></edwin-time>
+<ng-container [ngSwitch]="view">
+  <edwin-time *ngSwitchCase="View.time"></edwin-time>
 
-<edwin-photos *ngIf="!shouldDisplayTime"></edwin-photos>
+  <edwin-photos *ngSwitchCase="View.photos"></edwin-photos>
+
+  <edwin-wifi *ngSwitchCase="View.wifi"></edwin-wifi>
+</ng-container>
+
