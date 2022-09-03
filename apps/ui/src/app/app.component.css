@@ -1,0 +1,12 @@
+.edwin {
+  position: fixed;
+  z-index: 1;
+  top: 16px;
+  left: 16px;
+}
+
+.edwin img {
+  width: 64px;
+  height: 64px;
+  opacity: 0.75;
+}

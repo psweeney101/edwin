@@ -1,8 +1,5 @@
-<ng-container [ngSwitch]="view">
-  <edwin-time *ngSwitchCase="View.time"></edwin-time>
+<a mat-button class="edwin" routerLink="/explorer">
+  <img src="assets/logo.png">
+</a>
 
-  <edwin-photos *ngSwitchCase="View.photos"></edwin-photos>
-
-  <edwin-wifi *ngSwitchCase="View.wifi"></edwin-wifi>
-</ng-container>
-
+<router-outlet></router-outlet>

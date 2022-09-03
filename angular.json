@@ -41,6 +41,34 @@
       },
       "tags": []
     },
+    "explorer-ui": {
+      "projectType": "library",
+      "root": "libs/explorer/ui",
+      "sourceRoot": "libs/explorer/ui/src",
+      "prefix": "edwin",
+      "targets": {
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/explorer/ui"
+          ],
+          "options": {
+            "jestConfig": "libs/explorer/ui/jest.config.ts",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/explorer/ui/**/*.ts",
+              "libs/explorer/ui/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": []
+    },
     "photos-api": {
       "root": "libs/photos/api",
       "sourceRoot": "libs/photos/api/src",

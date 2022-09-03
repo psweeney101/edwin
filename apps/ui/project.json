@@ -27,8 +27,9 @@
         ],
         "scripts": [],
         "allowedCommonJsDependencies": [
+          "cron",
           "qr-code-styling"
-       ]
+        ]
       },
       "configurations": {
         "production": {

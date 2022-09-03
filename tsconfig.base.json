@@ -24,6 +24,9 @@
       "@edwin/environments/ui": [
         "libs/environments/ui/src/index.ts"
       ],
+      "@edwin/explorer/ui": [
+        "libs/explorer/ui/src/index.ts"
+      ],
       "@edwin/photos/api": [
         "libs/photos/api/src/index.ts"
       ],
