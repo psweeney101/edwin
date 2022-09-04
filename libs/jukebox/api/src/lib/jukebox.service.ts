@@ -23,7 +23,7 @@ export class JukeboxService {
     url.searchParams.append('response_type', 'code');
     url.searchParams.append('client_id', environment.SPOTIFY_CLIENT_ID);
     url.searchParams.append('scope', scope);
-    url.searchParams.append('redirect_uri', 'http://localhost:3333/api/jukebox/callback');
+    url.searchParams.append('redirect_uri', `${environment.API_URL}/api/jukebox/callback`);
     url.searchParams.append('state', state);
     return { url: url.toString() };
   }
@@ -34,7 +34,7 @@ export class JukeboxService {
     { access_token: string; token_type: 'Bearer'; scope: string; expires_in: number; refresh_token: string; }
     >(
       'https://accounts.spotify.com/api/token',
-      encodeURI(`grant_type=authorization_code&code=${code}&redirect_uri=http://localhost:3333/api/jukebox/callback`),
+      encodeURI(`grant_type=authorization_code&code=${code}&redirect_uri=${environment.API_URL}/api/jukebox/callback`),
       {
         headers: {
           Authorization: `Basic ${Buffer.from(`${environment.SPOTIFY_CLIENT_ID}:${environment.SPOTIFY_CLIENT_SECRET}`).toString('base64')}`,
@@ -46,7 +46,7 @@ export class JukeboxService {
     this.access_token = data.access_token;
     this.refresh_token = data.refresh_token;
 
-    return { url: 'http://localhost:4200/jukebox' };
+    return { url: `${environment.UI_URL}/jukebox` };
   }
 
   /** Refreshes the access token */

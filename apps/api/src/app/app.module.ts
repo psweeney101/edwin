@@ -9,7 +9,7 @@ import { AppService } from './app.service';
 
 @Module({
   imports: [
-    ServeStaticModule.forRoot({ rootPath: environment.UI_PATH, serveRoot: '/' }),
+    ServeStaticModule.forRoot({ rootPath: environment.UI_DIST_PATH }),
 
     JukeboxModule,
     PhotosModule,

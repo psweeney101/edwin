@@ -6,7 +6,7 @@
   <br />
   <strong>A smart display with some nifty plugins.</strong>
   
-  <p>🖼️ 🎵 📡</p>
+  <p>🎵 🖼️ 🕓 📡</p>
   <br/>
 
   <a href="https://angular.io">
@@ -41,7 +41,9 @@ npm install
 Create a .env file
 ```bash
 # Core
-UI_PATH="/path/to/edwin/dist/apps/ui"
+API_URL="http://localhost:3333"
+UI_URL="http://localhost:4200"
+UI_DIST_PATH="/path/to/edwin/dist/apps/ui"
 
 # Jukebox
 SPOTIFY_CLIENT_ID="spotify-client-id"
