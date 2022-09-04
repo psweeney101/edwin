@@ -69,6 +69,82 @@
       },
       "tags": []
     },
+    "jukebox-api": {
+      "root": "libs/jukebox/api",
+      "sourceRoot": "libs/jukebox/api/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": [
+            "{options.outputFile}"
+          ],
+          "options": {
+            "lintFilePatterns": [
+              "libs/jukebox/api/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/jukebox/api"
+          ],
+          "options": {
+            "jestConfig": "libs/jukebox/api/jest.config.ts",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "jukebox-shared": {
+      "root": "libs/jukebox/shared",
+      "sourceRoot": "libs/jukebox/shared/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": [
+            "{options.outputFile}"
+          ],
+          "options": {
+            "lintFilePatterns": [
+              "libs/jukebox/shared/**/*.ts"
+            ]
+          }
+        }
+      },
+      "tags": []
+    },
+    "jukebox-ui": {
+      "projectType": "library",
+      "root": "libs/jukebox/ui",
+      "sourceRoot": "libs/jukebox/ui/src",
+      "prefix": "edwin",
+      "targets": {
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/jukebox/ui"
+          ],
+          "options": {
+            "jestConfig": "libs/jukebox/ui/jest.config.ts",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/jukebox/ui/**/*.ts",
+              "libs/jukebox/ui/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": []
+    },
     "photos-api": {
       "root": "libs/photos/api",
       "sourceRoot": "libs/photos/api/src",

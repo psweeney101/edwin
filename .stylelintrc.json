@@ -3,5 +3,15 @@
   "extends": [
     "@psweeney101/stylelint-config"
   ],
-  "ignoreFiles": "**/dist/**"
+  "ignoreFiles": "**/dist/**",
+  "rules": {
+    "selector-pseudo-element-no-unknown": [
+      true,
+      {
+        "ignorePseudoElements": [
+          "ng-deep"
+        ]
+      }
+    ]
+  }
 }

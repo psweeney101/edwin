@@ -27,6 +27,15 @@
       "@edwin/explorer/ui": [
         "libs/explorer/ui/src/index.ts"
       ],
+      "@edwin/jukebox/api": [
+        "libs/jukebox/api/src/index.ts"
+      ],
+      "@edwin/jukebox/shared": [
+        "libs/jukebox/shared/src/index.ts"
+      ],
+      "@edwin/jukebox/ui": [
+        "libs/jukebox/ui/src/index.ts"
+      ],
       "@edwin/photos/api": [
         "libs/photos/api/src/index.ts"
       ],

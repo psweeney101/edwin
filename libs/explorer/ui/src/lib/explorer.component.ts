@@ -13,6 +13,7 @@ type Plugin = {
 })
 export class ExplorerComponent {
   plugins: Plugin[] = [
+    { name: 'Jukebox', route: '/jukebox', emoji: '🎶' },
     { name: 'Photos', route: '/photos', emoji: '🖼' },
     { name: 'Time', route: '/time', emoji: '🕓' },
     { name: 'WiFi', route: '/wifi', emoji: '📡' },

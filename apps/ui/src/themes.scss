@@ -25,6 +25,7 @@ $typography: mat.define-typography-config(
   $title:  mat.define-typography-level(10vmin),
   $subheading-2:  mat.define-typography-level(7vmin),
   $subheading-1:  mat.define-typography-level(5vmin),
+  $body-1: mat.define-typography-level(4vmin),
 );
 
 @include mat.core($typography);

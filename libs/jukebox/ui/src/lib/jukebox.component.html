@@ -1,0 +1,77 @@
+<mat-sidenav-container *ngIf="!error && player">
+  <mat-sidenav-content>
+
+    <div class="player">
+      <img [src]="player.album.image">
+
+      <h4>{{ player.name }}</h4>
+      <h5 class="gray">{{ player.artist.name }}</h5>
+
+      <mat-slider [value]="player.progress_ms" [max]="player.duration_ms" (change)="seek($event.value)"></mat-slider>
+
+      <div class="buttons">
+        <button mat-icon-button (click)="previous()">
+          <mat-icon>skip_previous</mat-icon>
+        </button>
+
+        <button mat-icon-button *ngIf="!player.is_playing" (click)="play()">
+          <mat-icon>play_arrow</mat-icon>
+        </button>
+
+        <button mat-icon-button *ngIf="player.is_playing" (click)="pause()">
+          <mat-icon>pause</mat-icon>
+        </button>
+
+        <button mat-icon-button (click)="next()">
+          <mat-icon>skip_next</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="queue">
+      <mat-list>
+        <div mat-subheader>
+          Up Next
+
+          <span class="spacer"></span>
+
+          <button mat-icon-button (click)="opened = true">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+
+        <mat-list-item *ngFor="let track of queue">
+          <img matListAvatar [src]="track.album.image">
+          <h4 matLine>{{ track.name }}</h4>
+          <h5 matLine class="gray">{{ track.artist.name }}</h5>
+        </mat-list-item>
+
+      </mat-list>
+    </div>
+
+  </mat-sidenav-content>
+
+  <mat-sidenav [(opened)]="opened" mode="over" position="end">
+    <h4>Add Song</h4>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Search</mat-label>
+      <input #input matInput [formControl]="searchFormControl" (keydown)="searchFormControl.setValue(input.value)"
+        placeholder="Search for a track...">
+      <button mat-icon-button matSuffix (click)="searchFormControl.setValue('')">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-selection-list [multiple]="false">
+      <mat-list-option *ngFor="let track of searchResults" (click)="add(track.id)">
+        <img matListAvatar [src]="track.album.image">
+        <h4 matLine>{{ track.name }}</h4>
+        <h5 matLine class="gray">{{ track.artist.name }}</h5>
+      </mat-list-option>
+    </mat-selection-list>
+
+  </mat-sidenav>
+</mat-sidenav-container>
+
+<h3 *ngIf="error" class="not-ready">{{ error }}</h3>

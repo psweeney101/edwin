@@ -38,10 +38,23 @@ npm install
 ```
 
 ## Setup
+Create a .env file
 ```bash
-# 📝 Both at .env and devops/.prod.env
-UI_PATH=/path/to/edwin/dist/apps/ui
-PHOTOS_PATH=/path/to/Photos
+# Core
+UI_PATH="/path/to/edwin/dist/apps/ui"
+
+# Jukebox
+SPOTIFY_CLIENT_ID="spotify-client-id"
+SPOTIFY_CLIENT_SECRET="spotify-client-password"
+SPOTIFY_REFRESH_TOKEN="spotify-refresh-token"
+
+# Photos
+PHOTOS_PATH="/path/to/photos"
+
+# WiFi
+WIFI_SSID="wifi-ssid"
+WIFI_PASSWORD="wifi-password"
+WIFI_SECURITY="wifi-security"
 ```
 
 ## Usage
@@ -66,11 +79,6 @@ npm run test:watch
 ```bash
 # 🛠 Build Edwin
 npm run build
-```
-
-```bash
-# 🚀 Deploy Edwin
-npm run deploy
 ```
 
 ## Contributing
