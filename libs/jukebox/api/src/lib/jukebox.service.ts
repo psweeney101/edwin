@@ -8,11 +8,72 @@ import {
 
 @Injectable()
 export class JukeboxService {
+  /** The currently playback state */
+  private player: Player = null;
+
+  /** The queue of songs up next */
+  private queue: Queue = [];
+
   /** The user's refresh token */
-  refresh_token? = environment.SPOTIFY_REFRESH_TOKEN;
+  private refresh_token? = environment.SPOTIFY_REFRESH_TOKEN;
 
   /** The user's access token */
-  access_token?: string;
+  private access_token?: string;
+
+  constructor() {
+    this.setState();
+  }
+
+  /** Sets the state on an interval */
+  private async setState(): Promise<void> {
+    try {
+      // Set the player
+      const data = await this.dispatch<{ item: SpotifyTrack; progress_ms: number; is_playing: boolean; }>({
+        method: 'get',
+        url: 'https://api.spotify.com/v1/me/player/currently-playing',
+      });
+
+      this.player = data ? {
+        album: {
+          id: data.item.album.id,
+          name: data.item.album.name,
+          image: data.item.album.images[0].url,
+        },
+        artist: {
+          id: data.item.artists[0].id,
+          name: data.item.artists[0].name,
+        },
+        id: data.item.id,
+        name: data.item.name,
+        duration_ms: data.item.duration_ms,
+        progress_ms: data.progress_ms,
+        is_playing: data.is_playing,
+      } : null;
+
+      // Set the queue
+      const { queue } = await this.dispatch<{ queue: SpotifyTrack[]; }>({
+        method: 'get',
+        url: 'https://api.spotify.com/v1/me/player/queue',
+      });
+      this.queue = queue.map(track => ({
+        album: {
+          id: track.album.id,
+          name: track.album.name,
+          image: track.album.images[0].url,
+        },
+        artist: {
+          id: track.artists[0].id,
+          name: track.artists[0].name,
+        },
+        id: track.id,
+        name: track.name,
+        duration_ms: track.duration_ms,
+      }));
+    } catch (error) {
+      console.error(error);
+    }
+    setTimeout(() => this.setState(), 1000);
+  }
 
   /** Redirects the user to Spotify's login page */
   login(): { url: string } {
@@ -69,30 +130,8 @@ export class JukeboxService {
   }
 
   /** Gets the user's current playback state */
-  async getPlayer(): Promise<Player> {
-    const data = await this.dispatch<{ item: SpotifyTrack; progress_ms: number; is_playing: boolean; }>({
-      method: 'get',
-      url: 'https://api.spotify.com/v1/me/player/currently-playing',
-    });
-
-    if (!data) return null;
-
-    return {
-      album: {
-        id: data.item.album.id,
-        name: data.item.album.name,
-        image: data.item.album.images[0].url,
-      },
-      artist: {
-        id: data.item.artists[0].id,
-        name: data.item.artists[0].name,
-      },
-      id: data.item.id,
-      name: data.item.name,
-      duration_ms: data.item.duration_ms,
-      progress_ms: data.progress_ms,
-      is_playing: data.is_playing,
-    };
+  getPlayer(): Player {
+    return this.player;
   }
 
   /** Pauses the player */
@@ -136,25 +175,8 @@ export class JukeboxService {
   }
 
   /** Gets the user's current queue */
-  async getQueue(): Promise<Queue> {
-    const { queue } = await this.dispatch<{ queue: SpotifyTrack[]; }>({
-      method: 'get',
-      url: 'https://api.spotify.com/v1/me/player/queue',
-    });
-    return queue.map(track => ({
-      album: {
-        id: track.album.id,
-        name: track.album.name,
-        image: track.album.images[0].url,
-      },
-      artist: {
-        id: track.artists[0].id,
-        name: track.artists[0].name,
-      },
-      id: track.id,
-      name: track.name,
-      duration_ms: track.duration_ms,
-    }));
+  getQueue(): Queue {
+    return this.queue;
   }
 
   /** Searches for matching tracks */

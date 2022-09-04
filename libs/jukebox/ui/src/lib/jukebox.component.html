@@ -1,4 +1,4 @@
-<mat-sidenav-container *ngIf="!error && player">
+<mat-sidenav-container *ngIf="loaded && player">
   <mat-sidenav-content>
 
     <div class="player">
@@ -74,4 +74,6 @@
   </mat-sidenav>
 </mat-sidenav-container>
 
-<h3 *ngIf="error" class="not-ready">{{ error }}</h3>
+<h3 *ngIf="loaded && !player" class="no-player">
+  Open Spotify on any device to get started.
+</h3>

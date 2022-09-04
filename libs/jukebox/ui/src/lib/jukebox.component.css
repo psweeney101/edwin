@@ -90,7 +90,9 @@
 }
 
 .mat-sidenav {
+  position: fixed;
   width: 80vw;
+  height: 100vh;
   padding: 16px;
   background: var(--background);
 }
@@ -108,10 +110,11 @@
   width: fit-content;
 }
 
-.not-ready {
+.no-player {
   display: flex;
   height: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }

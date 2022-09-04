@@ -21,10 +21,10 @@ export type Track = {
   duration_ms: number;
 };
 
-export type Player = Track & {
+export type Player = (Track & {
   progress_ms: number;
   is_playing: boolean;
-} | null;
+}) | null;
 
 export type Queue = Track[];
 

@@ -21,7 +21,7 @@ export class JukeboxController {
   }
 
   @Get('player')
-  getPlayer(): Promise<Player> {
+  getPlayer(): Player {
     return this.jukeboxService.getPlayer();
   }
 
@@ -51,7 +51,7 @@ export class JukeboxController {
   }
 
   @Get('queue')
-  getQueue(): Promise<Queue> {
+  getQueue(): Queue {
     return this.jukeboxService.getQueue();
   }
 

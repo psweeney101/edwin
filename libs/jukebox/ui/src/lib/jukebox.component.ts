@@ -11,7 +11,7 @@ import { Player, Queue, SearchResults } from '@edwin/jukebox/shared';
 })
 export class JukeboxComponent implements OnInit {
   /** The currently playback state */
-  player?: Player = null;
+  player: Player = null;
 
   /** The queue of songs up next */
   queue: Queue = [];
@@ -25,13 +25,14 @@ export class JukeboxComponent implements OnInit {
   /** Whether or not the sidenav is opened */
   opened = false;
 
-  /** Error message to display */
-  error?: string;
+  /** Whether or not the state has been loaded */
+  loaded = false;
 
   constructor(private http: HttpClient) { }
 
   async ngOnInit(): Promise<void> {
     await this.setState();
+    this.loaded = true;
 
     this.searchFormControl.valueChanges.pipe(
       debounceTime(1000),
@@ -41,18 +42,9 @@ export class JukeboxComponent implements OnInit {
 
   /** Sets the player and queue state */
   async setState(): Promise<void> {
-    try {
-      this.player = await lastValueFrom(this.http.get<Player>('/api/jukebox/player'));
-      this.queue = await lastValueFrom(this.http.get<Queue>('/api/jukebox/queue'));
-
-      if (!this.player) {
-        this.error = 'Open Spotify on any device to get started.';
-      }
-
-      setTimeout(() => this.setState(), 500);
-    } catch (error: any) {
-      this.error = error?.error?.message || 'Error loading Jukebox.';
-    }
+    this.player = await lastValueFrom(this.http.get<Player>('/api/jukebox/player'));
+    this.queue = await lastValueFrom(this.http.get<Queue>('/api/jukebox/queue'));
+    setTimeout(() => this.setState(), 1000);
   }
 
   /** Pauses the player */
