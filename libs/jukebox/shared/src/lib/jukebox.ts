@@ -29,3 +29,5 @@ export type Player = (Track & {
 export type Queue = Track[];
 
 export type SearchResults = Track[];
+
+export const SET_STATE_TIMEOUT = 1000;

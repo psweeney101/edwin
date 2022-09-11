@@ -2,7 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, lastValueFrom, switchMap } from 'rxjs';
-import { Player, Queue, SearchResults } from '@edwin/jukebox/shared';
+import {
+  Player, Queue, SearchResults, SET_STATE_TIMEOUT,
+} from '@edwin/jukebox/shared';
 
 @Component({
   selector: 'edwin-jukebox',
@@ -42,9 +44,11 @@ export class JukeboxComponent implements OnInit {
 
   /** Sets the player and queue state */
   async setState(): Promise<void> {
-    this.player = await lastValueFrom(this.http.get<Player>('/api/jukebox/player'));
-    this.queue = await lastValueFrom(this.http.get<Queue>('/api/jukebox/queue'));
-    setTimeout(() => this.setState(), 1000);
+    await Promise.all([
+      this.player = await lastValueFrom(this.http.get<Player>('/api/jukebox/player')),
+      this.queue = await lastValueFrom(this.http.get<Queue>('/api/jukebox/queue')),
+    ]);
+    setTimeout(() => this.setState(), SET_STATE_TIMEOUT);
   }
 
   /** Pauses the player */
@@ -66,6 +70,10 @@ export class JukeboxComponent implements OnInit {
   /** Skips to the next song */
   async next(): Promise<void> {
     await lastValueFrom(this.http.post<void>('/api/jukebox/player/next', null));
+    if (this.player) {
+      const track = this.queue.shift();
+      this.player = track ? { ...track, is_playing: true, progress_ms: 0 } : null;
+    }
   }
 
   /** Skips to the previous song */
@@ -75,7 +83,7 @@ export class JukeboxComponent implements OnInit {
 
   /** Seeks to a position in the current track */
   async seek(position_ms: number | null): Promise<void> {
-    if (!position_ms) return;
+    if (typeof position_ms !== 'number') return;
     await lastValueFrom(this.http.put<void>(`/api/jukebox/player/seek?position_ms=${position_ms}`, null));
     if (this.player) {
       this.player.progress_ms = position_ms;

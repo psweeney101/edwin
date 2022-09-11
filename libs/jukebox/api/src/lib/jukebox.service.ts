@@ -3,7 +3,7 @@ import { HttpException, Injectable } from '@nestjs/common';
 import axios, { AxiosRequestConfig } from 'axios';
 import { environment } from '@edwin/environments/api';
 import {
-  Player, Queue, SearchResults, SpotifyTrack,
+  Player, Queue, SearchResults, SET_STATE_TIMEOUT, SpotifyTrack,
 } from '@edwin/jukebox/shared';
 
 @Injectable()
@@ -27,34 +27,37 @@ export class JukeboxService {
   /** Sets the state on an interval */
   private async setState(): Promise<void> {
     try {
-      // Set the player
-      const data = await this.dispatch<{ item: SpotifyTrack; progress_ms: number; is_playing: boolean; }>({
-        method: 'get',
-        url: 'https://api.spotify.com/v1/me/player/currently-playing',
-      });
+      // Grab the player and queue from Spotify
+      const [player, { queue }] = await Promise.all([
+        this.dispatch<{ item: SpotifyTrack; progress_ms: number; is_playing: boolean; }>({
+          method: 'get',
+          url: 'https://api.spotify.com/v1/me/player/currently-playing',
+        }),
+        this.dispatch<{ queue: SpotifyTrack[]; }>({
+          method: 'get',
+          url: 'https://api.spotify.com/v1/me/player/queue',
+        }),
+      ]);
 
-      this.player = data ? {
+      // Set the player
+      this.player = player ? {
         album: {
-          id: data.item.album.id,
-          name: data.item.album.name,
-          image: data.item.album.images[0].url,
+          id: player.item.album.id,
+          name: player.item.album.name,
+          image: player.item.album.images[0].url,
         },
         artist: {
-          id: data.item.artists[0].id,
-          name: data.item.artists[0].name,
+          id: player.item.artists[0].id,
+          name: player.item.artists[0].name,
         },
-        id: data.item.id,
-        name: data.item.name,
-        duration_ms: data.item.duration_ms,
-        progress_ms: data.progress_ms,
-        is_playing: data.is_playing,
+        id: player.item.id,
+        name: player.item.name,
+        duration_ms: player.item.duration_ms,
+        progress_ms: player.progress_ms,
+        is_playing: player.is_playing,
       } : null;
 
       // Set the queue
-      const { queue } = await this.dispatch<{ queue: SpotifyTrack[]; }>({
-        method: 'get',
-        url: 'https://api.spotify.com/v1/me/player/queue',
-      });
       this.queue = queue.map(track => ({
         album: {
           id: track.album.id,
@@ -72,7 +75,7 @@ export class JukeboxService {
     } catch (error) {
       console.error(error);
     }
-    setTimeout(() => this.setState(), 1000);
+    setTimeout(() => this.setState(), SET_STATE_TIMEOUT);
   }
 
   /** Redirects the user to Spotify's login page */
@@ -140,6 +143,9 @@ export class JukeboxService {
       method: 'put',
       url: 'https://api.spotify.com/v1/me/player/pause',
     });
+    if (this.player) {
+      this.player.is_playing = false;
+    }
   }
 
   /** Resumes the player */
@@ -148,6 +154,9 @@ export class JukeboxService {
       method: 'put',
       url: 'https://api.spotify.com/v1/me/player/play',
     });
+    if (this.player) {
+      this.player.is_playing = true;
+    }
   }
 
   /** Skips to the next song */
@@ -156,6 +165,10 @@ export class JukeboxService {
       method: 'post',
       url: 'https://api.spotify.com/v1/me/player/next',
     });
+    if (this.player) {
+      const track = this.queue.shift();
+      this.player = track ? { ...track, is_playing: true, progress_ms: 0 } : null;
+    }
   }
 
   /** Skips to the previous song */
@@ -172,6 +185,9 @@ export class JukeboxService {
       method: 'put',
       url: `https://api.spotify.com/v1/me/player/seek?position_ms=${position_ms}`,
     });
+    if (this.player) {
+      this.player.progress_ms = Number(position_ms);
+    }
   }
 
   /** Gets the user's current queue */
