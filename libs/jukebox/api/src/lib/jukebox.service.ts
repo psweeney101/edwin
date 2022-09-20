@@ -15,7 +15,7 @@ export class JukeboxService {
   private queue: Queue = [];
 
   /** The user's refresh token */
-  private refresh_token?= environment.SPOTIFY_REFRESH_TOKEN;
+  private refresh_token? = environment.SPOTIFY_REFRESH_TOKEN;
 
   /** The user's access token */
   private access_token?: string;
@@ -95,7 +95,7 @@ export class JukeboxService {
   /** Spotify invokes this method after the user logs in */
   async callback(code: string): Promise<{ url: string }> {
     const { data } = await axios.post<
-      { access_token: string; token_type: 'Bearer'; scope: string; expires_in: number; refresh_token: string; }
+    { access_token: string; token_type: 'Bearer'; scope: string; expires_in: number; refresh_token: string; }
     >(
       'https://accounts.spotify.com/api/token',
       encodeURI(`grant_type=authorization_code&code=${code}&redirect_uri=${environment.API_URL}/api/jukebox/callback`),
