@@ -15,7 +15,7 @@ export class JukeboxService {
   private queue: Queue = [];
 
   /** The user's refresh token */
-  private refresh_token? = environment.SPOTIFY_REFRESH_TOKEN;
+  private refresh_token?= environment.SPOTIFY_REFRESH_TOKEN;
 
   /** The user's access token */
   private access_token?: string;
@@ -27,17 +27,11 @@ export class JukeboxService {
   /** Sets the state on an interval */
   private async setState(): Promise<void> {
     try {
-      // Grab the player and queue from Spotify
-      const [player, { queue }] = await Promise.all([
-        this.dispatch<{ item: SpotifyTrack; progress_ms: number; is_playing: boolean; }>({
-          method: 'get',
-          url: 'https://api.spotify.com/v1/me/player/currently-playing',
-        }),
-        this.dispatch<{ queue: SpotifyTrack[]; }>({
-          method: 'get',
-          url: 'https://api.spotify.com/v1/me/player/queue',
-        }),
-      ]);
+      // Grab the player from Spotify
+      const player = await this.dispatch<{ item: SpotifyTrack; progress_ms: number; is_playing: boolean; }>({
+        method: 'get',
+        url: 'https://api.spotify.com/v1/me/player/currently-playing',
+      });
 
       // Set the player
       this.player = player ? {
@@ -56,6 +50,12 @@ export class JukeboxService {
         progress_ms: player.progress_ms,
         is_playing: player.is_playing,
       } : null;
+
+      // Grab the queue from Spotify
+      const { queue } = await this.dispatch<{ queue: SpotifyTrack[]; }>({
+        method: 'get',
+        url: 'https://api.spotify.com/v1/me/player/queue',
+      });
 
       // Set the queue
       this.queue = queue.map(track => ({
@@ -95,7 +95,7 @@ export class JukeboxService {
   /** Spotify invokes this method after the user logs in */
   async callback(code: string): Promise<{ url: string }> {
     const { data } = await axios.post<
-    { access_token: string; token_type: 'Bearer'; scope: string; expires_in: number; refresh_token: string; }
+      { access_token: string; token_type: 'Bearer'; scope: string; expires_in: number; refresh_token: string; }
     >(
       'https://accounts.spotify.com/api/token',
       encodeURI(`grant_type=authorization_code&code=${code}&redirect_uri=${environment.API_URL}/api/jukebox/callback`),
@@ -243,11 +243,23 @@ export class JukeboxService {
 
       // Return data
       return response.data;
-    } catch (error: any) {
-      if (error?.response?.data?.error?.message === 'The access token expired') {
-        this.access_token = undefined;
-        return this.dispatch(config);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const code = error.response?.status;
+        // The access token expired
+        if (code === 400) {
+          this.access_token = undefined;
+          return this.dispatch(config);
+        }
+        // Too Many Requests
+        if (code === 429) {
+          const retryAfter = (Number(error.response?.headers?.['retry-after'] || 0) + 1) * 1000;
+          console.error(`Spotify: Too Many Requests. Trying again in ${retryAfter / 1000} seconds...`);
+          await new Promise(resolve => { setTimeout(resolve, (retryAfter)); });
+          return this.dispatch(config);
+        }
       }
+
       throw error;
     }
   }
