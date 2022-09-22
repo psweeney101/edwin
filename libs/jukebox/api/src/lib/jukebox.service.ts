@@ -247,7 +247,7 @@ export class JukeboxService {
       if (axios.isAxiosError(error)) {
         const code = error.response?.status;
         // The access token expired
-        if (code === 400) {
+        if (code === 401) {
           this.access_token = undefined;
           return this.dispatch(config);
         }
