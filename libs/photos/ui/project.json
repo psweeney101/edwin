@@ -1,4 +1,5 @@
 {
+  "name": "photos-ui",
   "projectType": "library",
   "sourceRoot": "libs/photos/ui/src",
   "prefix": "edwin",
@@ -6,7 +7,7 @@
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": [
-        "coverage/libs/photos/ui"
+        "{workspaceRoot}/coverage/libs/photos/ui"
       ],
       "options": {
         "jestConfig": "libs/photos/ui/jest.config.ts",

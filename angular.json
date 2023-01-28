@@ -50,7 +50,7 @@
         "test": {
           "executor": "@nrwl/jest:jest",
           "outputs": [
-            "coverage/libs/explorer/ui"
+            "{workspaceRoot}/coverage/libs/explorer/ui"
           ],
           "options": {
             "jestConfig": "libs/explorer/ui/jest.config.ts",
@@ -88,7 +88,7 @@
         "test": {
           "executor": "@nrwl/jest:jest",
           "outputs": [
-            "coverage/libs/jukebox/api"
+            "{workspaceRoot}/coverage/libs/jukebox/api"
           ],
           "options": {
             "jestConfig": "libs/jukebox/api/jest.config.ts",
@@ -126,7 +126,7 @@
         "test": {
           "executor": "@nrwl/jest:jest",
           "outputs": [
-            "coverage/libs/jukebox/ui"
+            "{workspaceRoot}/coverage/libs/jukebox/ui"
           ],
           "options": {
             "jestConfig": "libs/jukebox/ui/jest.config.ts",
@@ -164,7 +164,7 @@
         "test": {
           "executor": "@nrwl/jest:jest",
           "outputs": [
-            "coverage/libs/photos/api"
+            "{workspaceRoot}/coverage/libs/photos/api"
           ],
           "options": {
             "jestConfig": "libs/photos/api/jest.config.ts",
@@ -216,7 +216,7 @@
         "test": {
           "executor": "@nrwl/jest:jest",
           "outputs": [
-            "coverage/libs/wifi/api"
+            "{workspaceRoot}/coverage/libs/wifi/api"
           ],
           "options": {
             "jestConfig": "libs/wifi/api/jest.config.ts",
@@ -254,7 +254,7 @@
         "test": {
           "executor": "@nrwl/jest:jest",
           "outputs": [
-            "coverage/libs/wifi/ui"
+            "{workspaceRoot}/coverage/libs/wifi/ui"
           ],
           "options": {
             "jestConfig": "libs/wifi/ui/jest.config.ts",

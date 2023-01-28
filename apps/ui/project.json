@@ -1,4 +1,5 @@
 {
+  "name": "ui",
   "projectType": "application",
   "sourceRoot": "apps/ui/src",
   "prefix": "edwin",
@@ -98,7 +99,7 @@
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": [
-        "coverage/apps/ui"
+        "{workspaceRoot}/coverage/apps/ui"
       ],
       "options": {
         "jestConfig": "apps/ui/jest.config.ts",

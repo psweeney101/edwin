@@ -1,13 +1,9 @@
 <div class="wrapper">
-
-
   <a mat-button *ngFor="let plugin of plugins" [routerLink]="plugin.route">
 
     <div class="plugin">
       <h2>{{ plugin.emoji }}</h2>
       <h3>{{ plugin.name }}</h3>
     </div>
-
   </a>
-
 </div>

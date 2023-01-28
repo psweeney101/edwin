@@ -19,27 +19,33 @@
   --background: #{map.get($background, "background")};
 }
 
+// Set palettes
+$primary: mat.define-palette(mat.$blue-palette);
+$accent: mat.define-palette(mat.$gray-palette);
+$warn: mat.define-palette(mat.$red-palette);
+
 // Set typography
 $typography: mat.define-typography-config(
-  $headline:  mat.define-typography-level(20vmin),
-  $title:  mat.define-typography-level(10vmin),
-  $subheading-2:  mat.define-typography-level(7vmin),
-  $subheading-1:  mat.define-typography-level(5vmin),
+  $headline-5:  mat.define-typography-level(20vmin),
+  $headline-6:  mat.define-typography-level(10vmin),
+  $subtitle-2:  mat.define-typography-level(7vmin),
+  $subtitle-1:  mat.define-typography-level(5vmin),
   $body-1: mat.define-typography-level(4vmin),
 );
 
-@include mat.core($typography);
+// Set density
+$density: 0;
 
 // Dark Theme
-$dark-theme: mat.define-dark-theme(
-  (
-    color: (
-      primary: mat.define-palette(mat.$blue-palette),
-      accent: mat.define-palette(mat.$gray-palette),
-      warn: mat.define-palette(mat.$red-palette),
-    )
-  )
-);
+$dark-theme: mat.define-dark-theme((
+  color: (
+    primary: $primary,
+    accent: $accent,
+    warn: $warn,
+  ),
+  typography: $typography,
+  density: $density,
+));
 
 // Override Material's Dark Theme color to black
 $dark-theme: map.merge($dark-theme, (background: map.merge(map.get($dark-theme, background), (background: black))));
@@ -50,15 +56,15 @@ body {
 }
 
 // Light Theme
-$light-theme: mat.define-light-theme(
-  (
-    color: (
-      primary: mat.define-palette(mat.$blue-palette),
-      accent: mat.define-palette(mat.$gray-palette),
-      warn: mat.define-palette(mat.$red-palette),
-    )
-  )
-);
+$light-theme: mat.define-light-theme((
+  color: (
+    primary: $primary,
+    accent: $accent,
+    warn: $warn,
+  ),
+  typography: $typography,
+  density: $density,
+));
 
 body[theme="light"] {
   @include mat.all-component-colors($light-theme);

@@ -7,7 +7,9 @@
       <h4>{{ player.name }}</h4>
       <h5 class="gray">{{ player.artist.name }}</h5>
 
-      <mat-slider [value]="player.progress_ms" [max]="player.duration_ms" (change)="seek($event.value)"></mat-slider>
+      <mat-slider [max]="player.duration_ms">
+        <input matSliderThumb [value]="player.progress_ms" (valueChange)="seek($event)">
+      </mat-slider>
 
       <div class="buttons">
         <button mat-icon-button (click)="previous()">

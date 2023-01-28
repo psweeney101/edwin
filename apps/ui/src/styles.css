@@ -16,6 +16,10 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+a {
+  text-decoration: none;
+}
+
 .spacer { flex: 1; }
 
 .gray { opacity: 0.5; }
