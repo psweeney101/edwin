@@ -41,7 +41,8 @@ npm install
 Create a .env file
 ```bash
 # Core
-API_URL="http://localhost:3333"
+PORT=3000
+API_URL="http://localhost:3000"
 UI_URL="http://localhost:4200"
 UI_DIST_PATH="/path/to/edwin/dist/apps/ui"
 
