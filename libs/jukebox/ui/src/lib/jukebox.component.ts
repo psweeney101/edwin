@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, lastValueFrom, switchMap } from 'rxjs';
 import {
@@ -11,7 +11,10 @@ import {
   templateUrl: './jukebox.component.html',
   styleUrls: ['./jukebox.component.css'],
 })
-export class JukeboxComponent implements OnInit {
+export class JukeboxComponent implements OnInit, OnDestroy {
+  /** Whether or not the Jukebox is enabled */
+  enabled = false;
+
   /** The currently playback state */
   player: Player = null;
 
@@ -33,6 +36,8 @@ export class JukeboxComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   async ngOnInit(): Promise<void> {
+    await this.enable();
+
     await this.setState();
     this.loaded = true;
 
@@ -42,8 +47,26 @@ export class JukeboxComponent implements OnInit {
     ).subscribe(searchResults => { this.searchResults = searchResults; });
   }
 
+  async ngOnDestroy(): Promise<void> {
+    await this.disable();
+  }
+
+  /** Enables the jukebox */
+  async enable(): Promise<void> {
+    await lastValueFrom(this.http.put<void>('/api/jukebox/enable', null));
+    this.enabled = true;
+  }
+
+  /** Disables the jukebox */
+  async disable(): Promise<void> {
+    await lastValueFrom(this.http.put<void>('/api/jukebox/disable', null));
+    this.enabled = false;
+  }
+
   /** Sets the player and queue state */
   async setState(): Promise<void> {
+    if (!this.enabled) return;
+
     await Promise.all([
       this.player = await lastValueFrom(this.http.get<Player>('/api/jukebox/player')),
       this.queue = await lastValueFrom(this.http.get<Queue>('/api/jukebox/queue')),

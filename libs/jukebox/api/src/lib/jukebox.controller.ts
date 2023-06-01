@@ -20,6 +20,16 @@ export class JukeboxController {
     return this.jukeboxService.callback(code);
   }
 
+  @Put('enable')
+  enable(): Promise<void> {
+    return this.jukeboxService.enable();
+  }
+
+  @Put('disable')
+  disable(): void {
+    return this.jukeboxService.disable();
+  }
+
   @Get('player')
   getPlayer(): Player {
     return this.jukeboxService.getPlayer();

@@ -8,6 +8,9 @@ import {
 
 @Injectable()
 export class JukeboxService {
+  /** Whether or not the Jukebox service is enabled */
+  private enabled = false;
+
   /** The currently playback state */
   private player: Player = null;
 
@@ -20,12 +23,23 @@ export class JukeboxService {
   /** The user's access token */
   private access_token?: string;
 
-  constructor() {
-    this.setState();
+  /** Enable the Jukebox */
+  async enable(): Promise<void> {
+    if (!this.enabled) {
+      this.enabled = true;
+      await this.setState();
+    }
+  }
+
+  /** Disable the Jukebox */
+  disable(): void {
+    this.enabled = false;
   }
 
   /** Sets the state on an interval */
   private async setState(): Promise<void> {
+    if (!this.enabled) return;
+
     try {
       // Grab the player from Spotify
       const player = await this.dispatch<{ item: SpotifyTrack; progress_ms: number; is_playing: boolean; }>({
