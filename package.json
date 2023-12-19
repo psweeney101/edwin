@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "nx run-many --target build --configuration production",
+    "containerize": "docker build -t edwin .",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main",
     "lint": "nx run-many --target lint && stylelint **/*.{css,scss} && nx workspace-lint && sort-package-json --check",
     "lint:fix": "nx run-many --target lint --fix && stylelint **/*.{css,scss} --fix && nx workspace-lint && sort-package-json",
