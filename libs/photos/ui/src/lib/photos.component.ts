@@ -2,17 +2,10 @@ import {
   animate, state, style, transition, trigger,
 } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { lastValueFrom } from 'rxjs';
-import { Photos } from '@edwin/photos/shared';
-
-/** Helper function that shuffles an array */
-function shuffle<T>(array: Array<T>): Array<T> {
-  return array.map(value => ({ value, sort: Math.random() }))
-    .sort((a, b) => a.sort - b.sort)
-    .map(({ value }) => value);
-}
+import { Photo } from '@edwin/photos/shared';
 
 @Component({
   selector: 'edwin-photos',
@@ -27,69 +20,99 @@ function shuffle<T>(array: Array<T>): Array<T> {
     ]),
   ],
 })
-export class PhotosComponent {
+export class PhotosComponent implements OnInit, OnDestroy {
   /** All of the photos */
-  photos: string[] = [];
+  private photos: Photo[] = [];
 
-  /** The photo that will be displayed next, for pre-loading */
-  next?: string;
-
-  /** The currently displayed photo in the photos array */
-  index = 0;
+  /** The index of the currently displayed photo in the photos array */
+  private index = 0;
 
   /** Timer for when to show the next photo */
-  timer?: number;
+  private timer?: number;
+
+  /** Photos currently rendered on the DOM */
+  slideshow?: [Photo, Photo, Photo];
 
   /** The current date */
   now = Date.now();
 
-  /** Gets the safe src tag for an image */
-  src = (name: string): SafeResourceUrl => this.sanitizer.bypassSecurityTrustResourceUrl(`/api/photos/${name}`);
-
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) {
-    this.init();
     setInterval(() => { this.now = Date.now(); }, 1000);
   }
 
-  /** Gets the index of a move */
-  getMoveIndex(mode: 'next' | 'back'): number {
-    const index = mode === 'next' ? this.index + 1 : this.index - 1;
-
-    if (index >= this.photos.length) {
-      return 0;
-    } if (index < 0) {
-      return this.photos.length - 1;
-    }
-    return index;
-  }
-
-  /** Moves to either the next or previous photo */
-  move(mode: 'next' | 'back'): void {
-    // Clear the current timeout
-    window.clearTimeout(this.timer);
-
-    // Move the photo
-    this.index = this.getMoveIndex(mode);
-
-    // Prefetch the next photo
-    this.next = this.photos[this.getMoveIndex(mode)];
-
-    // Queue up the next move
-    this.timer = window.setTimeout(() => this.move('next'), 15000);
-  }
-
-  /** Initializes the photo queue */
-  async init(): Promise<void> {
+  async ngOnInit(): Promise<void> {
     // Get all of the photos
-    const request = this.http.get<Photos>('/api/photos');
+    const request = this.http.get<Photo[]>('/api/photos');
     const photos = await lastValueFrom(request);
-    this.photos = shuffle(photos);
+
+    // Shuffle the photos
+    this.photos = photos.map(value => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value);
 
     // If there are no photos, try again in 1 minute
     if (!this.photos.length) {
-      setTimeout(() => this.init(), 60000);
+      setTimeout(() => this.ngOnInit(), 60000);
     } else {
       this.move('next');
     }
+  }
+
+  ngOnDestroy(): void {
+    // Clear the current timeout
+    window.clearTimeout(this.timer);
+  }
+
+  /** Moves to either the next or previous photo */
+  move(direction: 'next' | 'prev'): void {
+    // Clear the current timeout
+    window.clearTimeout(this.timer);
+
+    if (!this.slideshow) {
+      // Initialize the slideshow
+      this.slideshow = [
+        this.getPhotoByMove('prev'),
+        this.photos[this.index],
+        this.getPhotoByMove('next'),
+      ];
+    } else {
+      // Update the current index
+      this.index = this.getIndexByMove(direction);
+
+      // Add a photo to the queue
+      if (direction === 'next') {
+        this.slideshow.push(this.getPhotoByMove('next'));
+        this.slideshow.shift();
+      } else {
+        this.slideshow.unshift(this.getPhotoByMove('prev'));
+        this.slideshow.pop();
+      }
+    }
+
+    // Queue up the next move
+    this.timer = window.setTimeout(() => this.move('prev'), 15000);
+  }
+
+  /** Gets the safe URL of a photo */
+  getSafeUrl(photo: Photo): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(`/api/photos/${photo}`);
+  }
+
+  /** Gets the index of a move */
+  private getIndexByMove(direction: 'next' | 'prev'): number {
+    let index = direction === 'next' ? this.index + 1 : this.index - 1;
+
+    if (index >= this.photos.length) {
+      index = 0;
+    } else if (index < 0) {
+      index = this.photos.length - 1;
+    }
+
+    return index;
+  }
+
+  /** Gets the index of a move */
+  private getPhotoByMove(direction: 'next' | 'prev'): Photo {
+    return this.photos[this.getIndexByMove(direction)];
   }
 }

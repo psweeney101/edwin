@@ -1,1 +1,1 @@
-export type Photos = string[];
+export type Photo = string;
