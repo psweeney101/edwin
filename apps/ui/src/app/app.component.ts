@@ -12,11 +12,17 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     /* eslint-disable no-new */
-    //           m   h   dom mon dow
-    new CronJob('0   6   *   *   *', () => { this.router.navigateByUrl('/photos'); }, null, true);
-    new CronJob('0   8   *   *   *', () => { this.router.navigateByUrl('/time'); }, null, true);
-    new CronJob('0   16  *   *   *', () => { this.router.navigateByUrl('/photos'); }, null, true);
-    new CronJob('0   22  *   *   *', () => { this.router.navigateByUrl('/time'); }, null, true);
+    // Weekdays: Photos 06:00–09:00
+    new CronJob('0 6 * * 1-5', () => this.router.navigateByUrl('/photos'), null, true);
+    new CronJob('0 9 * * 1-5', () => this.router.navigateByUrl('/time'), null, true);
+
+    // Weekdays: Photos 16:00–00:00
+    new CronJob('0 16 * * 1-5', () => this.router.navigateByUrl('/photos'), null, true);
+    new CronJob('0 0 * * 2-6', () => this.router.navigateByUrl('/time'), null, true);
+
+    // Weekends: Photos 08:00–00:00
+    new CronJob('0 8 * * 6,0', () => this.router.navigateByUrl('/photos'), null, true);
+    new CronJob('0 0 * * 0,1', () => this.router.navigateByUrl('/time'), null, true);
     /* eslint-enable no-new */
   }
 }

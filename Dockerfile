@@ -13,8 +13,8 @@ COPY ./dist/apps/api /app
 
 # Copy UI
 COPY ./dist/apps/ui /app/ui
-ENV NODE_ENV production
-ENV UI_DIST_PATH /app/ui
+ENV NODE_ENV=production
+ENV UI_DIST_PATH=/app/ui
 
 # Start app
 EXPOSE 3000
