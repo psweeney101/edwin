@@ -7,6 +7,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { lastValueFrom } from 'rxjs';
 import { Photo } from '@edwin/photos/shared';
 
+type Direction = 'next' | 'prev';
+
 @Component({
   selector: 'edwin-photos',
   templateUrl: './photos.component.html',
@@ -70,7 +72,7 @@ export class PhotosComponent implements OnInit, OnDestroy {
   }
 
   /** Moves to either the next or previous photo */
-  move(direction: 'next' | 'prev'): void {
+  move(direction: Direction): void {
     // Clear the current timeout
     window.clearTimeout(this.timer);
 
@@ -102,6 +104,7 @@ export class PhotosComponent implements OnInit, OnDestroy {
   /** Sets the starting x position for swipe gestures */
   onTouchStart(event: TouchEvent): void {
     this.touchStartX = event.touches[0].clientX;
+    this.touchCurrentX = this.touchStartX;
   }
 
   /** Sets the current x position for swipe gestures */
@@ -111,7 +114,13 @@ export class PhotosComponent implements OnInit, OnDestroy {
 
   /** Moves the photo when the swipe gesture completes */
   onTouchEnd(): void {
-    const direction = this.touchCurrentX < this.touchStartX ? 'next' : 'prev';
+    // Ensure gesture was intentional
+    const distance = Math.abs(this.touchCurrentX - this.touchStartX);
+    const threshold = window.innerWidth * 0.4;
+    if (distance < threshold) return;
+
+    // Determine direction and move
+    const direction: Direction = this.touchCurrentX < this.touchStartX ? 'next' : 'prev';
     this.move(direction);
   }
 
@@ -121,7 +130,7 @@ export class PhotosComponent implements OnInit, OnDestroy {
   }
 
   /** Gets the index of a move */
-  private getIndexByMove(direction: 'next' | 'prev'): number {
+  private getIndexByMove(direction: Direction): number {
     let index = direction === 'next' ? this.index + 1 : this.index - 1;
 
     if (index >= this.photos.length) {
@@ -134,7 +143,7 @@ export class PhotosComponent implements OnInit, OnDestroy {
   }
 
   /** Gets the index of a move */
-  private getPhotoByMove(direction: 'next' | 'prev'): Photo {
+  private getPhotoByMove(direction: Direction): Photo {
     return this.photos[this.getIndexByMove(direction)];
   }
 }
