@@ -1,17 +1,20 @@
 <!-- Prefetch images -->
 <ng-container *ngFor="let photo of slideshow">
-  <link rel="prefetch" [href]="getSafeUrl(photo)" as="image">
+  <link rel="prefetch" [href]="getSafeUrl(photo)" as="image" />
 </ng-container>
 
-<!-- Display 1 image at a time -->
-<ng-container *ngIf="slideshow">
-  <ng-container *ngFor="let photo of slideshow; index as i">
-    <img *ngIf="i === 1" [src]="getSafeUrl(photo)" @fade>
+<!-- Detect swipe -->
+<div class="wrapper" (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event)" (touchend)="onTouchEnd()">
+  <!-- Display 1 image at a time -->
+  <ng-container *ngIf="slideshow">
+    <ng-container *ngFor="let photo of slideshow; index as i">
+      <img *ngIf="i === 1" [src]="getSafeUrl(photo)" @fade />
+    </ng-container>
   </ng-container>
-</ng-container>
 
-<!-- Time and date -->
-<div class="info">
-  <h2>{{ now | date: 'HH:mm' }}</h2>
-  <h3 class="gray">{{ now | date: 'EEE, MMM d' }}</h3>
+  <!-- Time and date -->
+  <div class="info">
+    <h2>{{ now | date : 'HH:mm' }}</h2>
+    <h3 class="gray">{{ now | date : 'EEE, MMM d' }}</h3>
+  </div>
 </div>

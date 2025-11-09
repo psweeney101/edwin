@@ -36,6 +36,12 @@ export class PhotosComponent implements OnInit, OnDestroy {
   /** The current date */
   now = Date.now();
 
+  /** The starting X position for swipe gestures */
+  private touchStartX = 0;
+
+  /** The current X position for swipe gestures */
+  private touchCurrentX = 0;
+
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) {
     setInterval(() => { this.now = Date.now(); }, 1000);
   }
@@ -90,7 +96,23 @@ export class PhotosComponent implements OnInit, OnDestroy {
     }
 
     // Queue up the next move
-    this.timer = window.setTimeout(() => this.move('prev'), 15000);
+    this.timer = window.setTimeout(() => this.move('next'), 15000);
+  }
+
+  /** Sets the starting x position for swipe gestures */
+  onTouchStart(event: TouchEvent): void {
+    this.touchStartX = event.touches[0].clientX;
+  }
+
+  /** Sets the current x position for swipe gestures */
+  onTouchMove(event: TouchEvent): void {
+    this.touchCurrentX = event.touches[0].clientX;
+  }
+
+  /** Moves the photo when the swipe gesture completes */
+  onTouchEnd(): void {
+    const direction = this.touchCurrentX < this.touchStartX ? 'next' : 'prev';
+    this.move(direction);
   }
 
   /** Gets the safe URL of a photo */
